@@ -6,7 +6,9 @@ import { SubscriptionGuard } from './subscription/subscription.guard.js';
 export class AppController {
   @Get('health')
   health() {
-    return { status: 'ok' };
+    return {
+      status: 'ok',
+    };
   }
 
   @UseGuards(JwtAuthGuard, SubscriptionGuard)
