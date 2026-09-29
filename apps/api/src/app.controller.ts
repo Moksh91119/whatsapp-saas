@@ -1,17 +1,18 @@
-import { Controller, Get } from '@nestjs/common';
-import { PrismaService } from '@whatsapp-saas/database';
+import { Controller, Get, Req, UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from './auth/jwt-auth.guard.js';
 
 @Controller()
 export class AppController {
-  constructor(private readonly prisma: PrismaService) {}
-
   @Get('health')
-  async health() {
-    await this.prisma.$queryRaw`SELECT 1`;
-
+  health() {
     return {
       status: 'ok',
-      database: 'connected',
     };
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('me')
+  getProfile(@Req() req: { user: { userId: string; email: string } }) {
+    return req.user;
   }
 }
