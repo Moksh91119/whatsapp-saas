@@ -1,0 +1,4 @@
+
+> @whatsapp-saas/database@1.0.0 build D:\whatsapp-saas\packages\database
+> tsc -p tsconfig.json
+
