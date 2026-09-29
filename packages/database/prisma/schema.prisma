@@ -32,6 +32,7 @@ model Business {
   owner     User     @relation(fields: [ownerId], references: [id])
 
   settings  BusinessSettings?
+  whatsappAccount WhatsAppAccount?
 }
 
 model BusinessSettings {
@@ -48,4 +49,25 @@ enum SubscriptionStatus {
   ACTIVE
   EXPIRED
   CANCELLED
+}
+
+enum WhatsAppConnectionStatus {
+  DISCONNECTED
+  PENDING
+  CONNECTED
+  FAILED
+}
+
+model WhatsAppAccount {
+  id                String                    @id @default(uuid())
+  businessId        String                    @unique
+  phoneNumber       String?
+  phoneNumberId     String?                   @unique
+  businessAccountId String?
+  status            WhatsAppConnectionStatus  @default(DISCONNECTED)
+  connectedAt       DateTime?
+  createdAt         DateTime                  @default(now())
+  updatedAt         DateTime                  @updatedAt
+
+  business          Business                  @relation(fields: [businessId], references: [id], onDelete: Cascade)
 }
