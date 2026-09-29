@@ -24,6 +24,9 @@ model Business {
   country   String   @default("IN")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  trialStartedAt DateTime @default(now())
+  trialEndsAt DateTime @default(dbgenerated("(CURRENT_TIMESTAMP + INTERVAL '7 days')"))
+  subscriptionStatus SubscriptionStatus @default(TRIAL)
 
   ownerId   String   @unique
   owner     User     @relation(fields: [ownerId], references: [id])
@@ -38,4 +41,11 @@ model BusinessSettings {
   currency   String @default("INR")
 
   business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+}
+
+enum SubscriptionStatus {
+  TRIAL
+  ACTIVE
+  EXPIRED
+  CANCELLED
 }

@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Business" ALTER COLUMN "trialEndsAt" SET DEFAULT (CURRENT_TIMESTAMP + INTERVAL '7 days');
